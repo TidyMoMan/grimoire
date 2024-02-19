@@ -1,0 +1,16 @@
+str_mod=1000
+dex_mod=3
+con_mod=1
+int_mod=2
+wis_mod=1
+cha_mod=2
+str_tru=12
+dex_tru=16
+con_tru=12
+int_tru=14
+wis_tru=8
+cha_tru=14
+acl=
+spd=
+hit=
+lvl=

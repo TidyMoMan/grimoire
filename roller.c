@@ -1,47 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h> //for random seed lul
-#include <direct.h> // _getcwd
-#include <string.h> // strlen
+#include <string.h>
 
-
-FILE *stats;
+#define NUM_MODIFIERS 6
+#define LABEL_OFFSET 8 //standard label length in the stats file
 
 int main(){
-    srand((unsigned int)time(NULL));
+
+    srand((unsigned int)time(NULL)); //set random seed
+
     int numDice = 0, dice = 0;
     int result[1000];
 
-    char* path;
-   // Get the current working directory:
-   if( (path = _getcwd( NULL, 0 )) == NULL ){
-      perror( "_getcwd error" );
-    }
-    
-    path = strcpy(path, "\\stats.txt");
-    stats = fopen(path, "w");
+    int att[NUM_MODIFIERS * 2]; //set attributes (multiplied by 2 to hold both true values and modifier values)
+    att[0] = 69;
+
+    FILE *stats;
+    stats = fopen("stats.txt", "r+"); //open file
 
     if(stats == NULL){
-        printf("Failed to access stats file!");
+        printf("Failed to access stats file!"); //sad trombone
         return 0;
     }else{
-        printf("Successfully accessed stats file at %s.", path);
-    }
+        printf("Successfully accessed stats file.");
 
-    fprintf(stats, "hello!!!");
 
-    while(1){
-        printf("enter a dice size (xdx): ");
-        scanf("%dd%d", &numDice, &dice);
-        if(numDice > 1000 || dice > 1000){printf("cannot handle dice larger than 1000");}
-
-        //roll the die
-        for(int i = 0; i < numDice; i++){
-            result[i] = rand() % (dice+1);
-            printf(" [%d]", result[i]);
+        for (size_t i = 0; i < NUM_MODIFIERS * 2; i++)
+        {
+            fseek(stats, LABEL_OFFSET * (i+1), 0); //move to the correct value
+            fscanf(stats, "%d", &att[i]); 
+            fseek(stats, 0, 0);
+            printf("%d\n", att[i]);
         }
+        fclose(stats);
+
+        // for (size_t i = 0; i < NUM_MODIFIERS * 2; i++)
+        // {
+        //     printf("%d = %d\n", i, att[i]);
+        // }
+        
+
+       
 
     }
+
+    printf(" str = %d", att[5]);
+
+    
+
+
+    // while(1){
+    //     printf("enter a dice size (xdx): ");
+    //     scanf("%dd%d", &numDice, &dice);
+    //     if(numDice > 1000 || dice > 1000){printf("cannot handle dice larger than 1000");}
+
+    //     //roll the die
+    //     for(int i = 0; i < numDice; i++){
+    //         result[i] = rand() % (dice+1);
+    //         printf(" [%d]", result[i]);
+    //     }
+
+    // }
 
     return 0;
 }
