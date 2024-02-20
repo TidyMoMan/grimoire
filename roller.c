@@ -30,7 +30,7 @@ int main(){
         {
             fseek(stats, LABEL_OFFSET * (i+1), 0); //move to the correct value
             fscanf(stats, "%d", &att[i]); 
-            fseek(stats, 0, 0);
+            fseek(stats, 0, 0);m 
             printf("%d\n", att[i]);
         }
         fclose(stats);
