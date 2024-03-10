@@ -6,15 +6,23 @@
 #define NUM_MODIFIERS 6
 #define LABEL_OFFSET 8 //standard label length in the stats file
 
+int getMod(FILE*, int);
+
+struct character
+{
+    int id;
+    int wd;
+};
+
+
+
+
 int main(){
 
     srand((unsigned int)time(NULL)); //set random seed
 
-    int numDice = 0, dice = 0;
-    int result[1000];
-
-    int att[NUM_MODIFIERS * 2]; //set attributes (multiplied by 2 to hold both true values and modifier values)
-    att[0] = 69;
+    char buffer[256];
+    char att[NUM_MODIFIERS * 2]; //set attributes (multiplied by 2 to hold both true values and modifier values)
 
     FILE *stats;
     stats = fopen("stats.txt", "r"); //open file
@@ -29,24 +37,16 @@ int main(){
 
         // fscanf(stats, "%s", buffer);
 
-        // printf("%s", buffer);
+        printf("im going CRAZYYYY");
+
+      
+        fclose(stats);
 
         for (size_t i = 0; i < NUM_MODIFIERS * 2; i++)
         {
-            fseek(stats, LABEL_OFFSET * (i+1), 0); //move to the correct value
-            fscanf(stats, "%s", att); 
-            rewind(stats);
-            printf("%s\n", att);
+            printf("%d",getMod(stats, i));
         }
-        fclose(stats);
-
-        // for (size_t i = 0; i < NUM_MODIFIERS * 2; i++)
-        // {
-        //     printf("%d = %d\n", i, att[i]);
-        // }
     }
-
-    printf(" str = %d", att[5]);
 
     // while(1){
     //     printf("enter a dice size (xdx): ");
@@ -62,4 +62,11 @@ int main(){
     // }
 
     return 0;
+}
+
+int getMod(FILE *file, int target){
+    int val;
+    fseek(file, (LABEL_OFFSET * target), 0); //move to the correct value
+    fscanf(file, "%d", &val);
+    return val;
 }
