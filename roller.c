@@ -17,21 +17,26 @@ int main(){
     att[0] = 69;
 
     FILE *stats;
-    stats = fopen("stats.txt", "r+"); //open file
+    stats = fopen("stats.txt", "r"); //open file
 
     if(stats == NULL){
-        printf("Failed to access stats file!"); //sad trombone
+        printf("Failed to access stats file!\n"); //sad trombone
         return 0;
     }else{
-        printf("Successfully accessed stats file.");
+        printf("Successfully accessed stats file.\n");
 
+        // char buffer[7];
+
+        // fscanf(stats, "%s", buffer);
+
+        // printf("%s", buffer);
 
         for (size_t i = 0; i < NUM_MODIFIERS * 2; i++)
         {
             fseek(stats, LABEL_OFFSET * (i+1), 0); //move to the correct value
-            fscanf(stats, "%d", &att[i]); 
-            fseek(stats, 0, 0);m 
-            printf("%d\n", att[i]);
+            fscanf(stats, "%s", att); 
+            rewind(stats);
+            printf("%s\n", att);
         }
         fclose(stats);
 
@@ -39,16 +44,9 @@ int main(){
         // {
         //     printf("%d = %d\n", i, att[i]);
         // }
-        
-
-       
-
     }
 
     printf(" str = %d", att[5]);
-
-    
-
 
     // while(1){
     //     printf("enter a dice size (xdx): ");

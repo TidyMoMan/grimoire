@@ -1,4 +1,4 @@
-str_mod=1000
+1000
 dex_mod=3
 con_mod=1
 int_mod=2
